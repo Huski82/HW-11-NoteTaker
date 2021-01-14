@@ -1,23 +1,37 @@
-
+// Load Data
 // I'm linking the route to my JSON data
-const dbJSON = require("../db/db");
-// Routes 
+let dbJSON = require("../db/db");
+
+// Routes ======================================================
 
 module.exports = function(app) {
    // GET the api for the notes
    app.get("/api/notes", function(request, response) {
-      return response.json(path.join(__dirname, "../db/db.json"));
       response.json(dbJSON);
    });
 
+   // add new items to the api when they are added
    app.post("/api/notes", function(request, response) {
-      let title = response.title;
-      let text = response.text;
-
-      let dataJSON = `{ "title": ${title}, "text": ${text} }`;
-
-      dbJSON.push(dataJSON);
+      console.log("Post successful! Data logged:");
       console.log(response.req.body);
       dbJSON.push(response.req.body);
+      response.end("yes");
+   });
+
+   // delete items when the trashcan icon is pressed
+
+   app.delete("/api/notes/:note", function(request, response) {
+      console.log("Record deleted");
+      let newDbJSON = [];
+      const thisNoteID = request.params.note;
+      const noteToDelete = dbJSON.map(note => {
+         if (note.id !== thisNoteID) {
+            newDbJSON.push(note);
+         }
+      });
+
+      dbJSON = newDbJSON;
+
+      response.end();
    });
 };
