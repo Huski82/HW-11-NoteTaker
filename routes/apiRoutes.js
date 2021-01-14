@@ -1,8 +1,7 @@
-// Load Data
-// I'm linking the route to my JSON data
-let dbJSON = require("../db/db");
 
-// Routes ======================================================
+let dbJSON = require("../Develop/db/db.json");
+
+// Routes 
 
 module.exports = function(app) {
    // GET the api for the notes
@@ -10,7 +9,7 @@ module.exports = function(app) {
       response.json(dbJSON);
    });
 
-   // add new items to the api when they are added
+   
    app.post("/api/notes", function(request, response) {
       console.log("Post successful! Data logged:");
       console.log(response.req.body);
@@ -18,7 +17,7 @@ module.exports = function(app) {
       response.end("yes");
    });
 
-   // delete items when the trashcan icon is pressed
+   
 
    app.delete("/api/notes/:note", function(request, response) {
       console.log("Record deleted");

@@ -7,13 +7,13 @@ const path = require("path");
 module.exports = function(app) {
    
    app.get("/notes", function(request, response) {
-      response.sendFile(path.join(__dirname, "../public/notes.html"));
+     response.sendFile(path.join(__dirname, "../Develop/public/notes.html"));
    });
 
    
    app.get("/assets/css/styles.css", function(request, response) {
       response.sendFile(
-         path.join(__dirname, "../public/assets/css/styles.css")
+         path.join(__dirname, "../Develop/public/assets/css/styles.css")
       );
    });
 
