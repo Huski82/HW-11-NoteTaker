@@ -1,5 +1,5 @@
 
-let dbJSON = require("../Develop/db/db.json");
+let dbJSON = require("../db/db.json");
 
 // Routes 
 
