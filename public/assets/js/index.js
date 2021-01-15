@@ -3,19 +3,16 @@ const $noteText = $(".note-textarea");
 const $saveNoteBtn = $(".save-note");
 const $newNoteBtn = $(".new-note");
 const $noteList = $(".list-container .list-group");
-// const dbJSONObj = require("../../../db/db");
 
-// activeNote is used to keep track of the note in the textarea
+
+
 let activeNote = {};
 
-// function getIDIndex() {
-//    let dbLength = dbJSONObj.length;
-//    console.log(dbLength);
-// }
+
 
 let noteID = 1;
 
-// A function for getting all notes from the db
+
 function getNotes() {
    return $.ajax({
       url: "/api/notes",
@@ -23,7 +20,7 @@ function getNotes() {
    });
 }
 
-// A function for saving a note to the db
+
 function saveNote(note) {
    return $.ajax({
       url: "/api/notes",
@@ -32,7 +29,7 @@ function saveNote(note) {
    });
 }
 
-// A function for deleting a note from the db
+
 function deleteNote(id) {
    return $.ajax({
       url: "api/notes/" + id,
@@ -40,7 +37,7 @@ function deleteNote(id) {
    });
 }
 
-// If there is an activeNote, display it, otherwise render empty inputs
+
 const renderActiveNote = function() {
    $saveNoteBtn.hide();
 
@@ -57,7 +54,7 @@ const renderActiveNote = function() {
    }
 };
 
-// Get the note data from the inputs, save it to the db and update the view
+
 const handleNoteSave = function() {
    console.log("click heard!");
 
@@ -78,7 +75,7 @@ const handleNoteSave = function() {
 
 // Delete the clicked note
 const handleNoteDelete = function(event) {
-   // prevents the click listener for the list from being called when the button inside of it is clicked
+   /
    event.stopPropagation();
 
    console.log("delete click heard!");
@@ -144,7 +141,7 @@ const renderNoteList = function(notes) {
    $noteList.append(noteListItems);
 };
 
-// Gets notes from the db and renders them to the sidebar
+
 const getAndRenderNotes = function() {
    return getNotes().then(function(data) {
       console.log("rendered data successfully");
@@ -159,6 +156,6 @@ $noteList.on("click", ".delete-note", handleNoteDelete);
 $noteTitle.on("keyup", handleRenderSaveBtn);
 $noteText.on("keyup", handleRenderSaveBtn);
 
-// Gets and renders the initial list of notes
+
 getAndRenderNotes();
-// getIDIndex();
+
