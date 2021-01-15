@@ -118,7 +118,7 @@ const handleNewNoteView = (e) => {
   renderActiveNote();
 };
 
-/
+
 const handleRenderSaveBtn = () => {
   if (!noteTitle.value.trim() || !noteText.value.trim()) {
     hide(saveNoteBtn);

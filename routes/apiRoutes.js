@@ -1,23 +1,40 @@
+const router = require("express").Router();
+const {nanoid} = require("nanoid")
+const fs = require('fs')
+const path = require("path");
 
-let dbJSON = require("../db/db.json");
+const dbJSON = path.join(__dirname, "../db/db.json");
 
-// Routes 
 
 module.exports = function(app) {
    // GET the api for the notes
    app.get("/api/notes", function(request, response) {
-      response.json(dbJSON);
+     fs.readFile (dbJSON,"utf8",(err,data) => {
+        if (err) throw err;
+        response.json(JSON.parse(data)); 
+     })
+   
    });
 
    
-   app.post("/api/notes", function(request, response) {
-      console.log("Post successful! Data logged:");
-      console.log(response.req.body);
-      dbJSON.push(response.req.body);
-      response.end("yes");
+   app.post("/api/notes", function(req,res) {
+      console.log(req.body);
+      let noteid;
+      let allNotes = [];
+      fs.readFile(dbJSON,"utf8",(err,data) => {
+         if (err) throw err;
+         allNotes = JSON.parse(data);
+          console.log((allNotes))
+      let newNote = {"title": req.body.title, "text": req.body.text};
+       allNotes.push(newNote)
+      })
+      
+       console.log (allNotes)
+      fs.writeFile(dbJSON, JSON.stringify(allNotes),(err) => {
+         if (err) throw err;
+         })
+         res.json({msg: 'new note added to database'})
    });
-
-   
 
    app.delete("/api/notes/:note", function(request, response) {
       console.log("Record deleted");
