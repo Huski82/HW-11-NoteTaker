@@ -20,7 +20,7 @@ We were given starter code - HTML, CSS and an index.js file - and we were to wri
 
 ## Screenshot
 
-![screenshot of the app](/Develop/Screen Shot Note Taker.png)
+![](./Develop/Screen Shot Note Taker.png)
 
 ## Contributions
 Recognizing contributors and sites that helped in development:
