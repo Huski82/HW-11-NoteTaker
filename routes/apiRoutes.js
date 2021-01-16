@@ -43,10 +43,8 @@ module.exports = function(app) {
       fs.readFile(dbJSON,'utf8', (err,data) =>  {
          if (err) throw err;
          allNotes = JSON.parse(data);
-         console.log ("array",allNotes) 
-         console.log ("from site",thisNoteID) 
-        
-         for (let i = 0; i < allNotes.length; i++) {
+          
+        for (let i = 0; i < allNotes.length; i++) {
          if (allNotes[i].id !== thisNoteID)
          {newDbJSON.push (allNotes[i])
          }
