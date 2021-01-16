@@ -21,6 +21,7 @@ We were given starter code - HTML, CSS and an index.js file - and we were to wri
 ## Screenshot
 
 ![](./Screen-Note-Taker.png)
+![](./NOTETAKER.mp4)
 
 ## Contributions
 Recognizing contributors and sites that helped in development:
