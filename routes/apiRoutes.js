@@ -2,6 +2,7 @@ const router = require("express").Router();
 const {nanoid} = require("nanoid")
 const fs = require('fs')
 const path = require("path");
+const { allowedNodeEnvironmentFlags } = require("process");
 
 const dbJSON = path.join(__dirname, "../db/db.json");
 
@@ -17,36 +18,45 @@ module.exports = function(app) {
    });
 
    
-   app.post("/api/notes", function(req,res) {
-      console.log(req.body);
-      let noteid;
+   app.post("/api/notes", (req,res) => {
+      let noteid = nanoid(10);
       let allNotes = [];
-      fs.readFile(dbJSON,"utf8",(err,data) => {
+      fs.readFile(dbJSON,'utf8', (err,data) =>  {
          if (err) throw err;
          allNotes = JSON.parse(data);
-          console.log((allNotes))
-      let newNote = {"title": req.body.title, "text": req.body.text};
-       allNotes.push(newNote)
-      })
-      
-       console.log (allNotes)
-      fs.writeFile(dbJSON, JSON.stringify(allNotes),(err) => {
-         if (err) throw err;
-         })
-         res.json({msg: 'new note added to database'})
+         let newNote = {"id": noteid, "title": req.body.title, "text": req.body.text};
+         allNotes.push(newNote)
+           fs.writeFile(dbJSON, JSON.stringify(allNotes),(err) => {
+             if (err) throw err;
+           })
+       })
+      res.json({msg: 'new note added to database'})
    });
+      
+       
 
-   app.delete("/api/notes/:note", function(request, response) {
+    app.delete("/api/notes/:note", function(request, response) {
       console.log("Record deleted");
+      let allNotes = [];
       let newDbJSON = [];
       const thisNoteID = request.params.note;
-      const noteToDelete = dbJSON.map(note => {
-         if (note.id !== thisNoteID) {
-            newDbJSON.push(note);
+      fs.readFile(dbJSON,'utf8', (err,data) =>  {
+         if (err) throw err;
+         allNotes = JSON.parse(data);
+         console.log ("array",allNotes) 
+         console.log ("from site",thisNoteID) 
+        
+         for (let i = 0; i < allNotes.length; i++) {
+         if (allNotes[i].id !== thisNoteID)
+         {newDbJSON.push (allNotes[i])
          }
-      });
 
-      dbJSON = newDbJSON;
+         
+         }
+         fs.writeFile(dbJSON, JSON.stringify(newDbJSON),(err) => {
+            if (err) throw err;
+          })
+      });
 
       response.end();
    });
